@@ -20,7 +20,7 @@ class MicroPostRepository extends ServiceEntityRepository
     {
         $this->getEntityManager()->persist($entity);
 
-        if($flush) {
+        if ($flush) {
             $this->getEntityManager()->flush();
         }
     }
@@ -29,9 +29,20 @@ class MicroPostRepository extends ServiceEntityRepository
     {
         $this->getEntityManager()->remove($entity);
 
-        if($flush) {
+        if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function findAllWithComments(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->addSelect('c')
+            // ->innerJoin('p.comments', 'c')
+            ->leftJoin('p.comments', 'c')
+            ->orderBy('p.created', 'DESC')
+            ->getQuery()
+            ->getResult();
     }
 
     //    /**
