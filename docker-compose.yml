@@ -17,8 +17,8 @@ services:
     ports:
       - 8080:8080
 
-  mailer:
-    image: axllent/mailpit
+  mailcatcher:
+    image: instructure/mailcatcher:latest
     ports:
-      - 1080:1080
-      - 1025:1025    
+      - "1025:1025" # SMTP port (internal:external)    
+      - "1080:1080" # Web interface port (internal:external)
